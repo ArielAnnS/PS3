@@ -283,6 +283,7 @@ end
 
 # ╔═╡ 7ab4d2d1-36d1-4c15-ab8a-a469a2da3fc6
  begin
+	 #If we didn't have the data, we set it to one
 	#vmax
 	vmax₁=203.0*E[1]
 	vmax₂=34.5*E[2]
@@ -296,25 +297,33 @@ end
 	flux_bounds_array1[:,2] .= 100.0 # default value is 100 for flux units: μmol/gDW-s
 
 	 #v1
-	p1=(11.9*96.7*1)/((1+11.9)*(1+96.7)*(1+1)-1)
+	p1=(11.9*96.7*1)/((1+11.9)*(1+96.7)*(1+1))
 	flux_bounds_array1[1,2] = vmax₁*p1
 	 #v2
-	p2=(1)/(1+1-1)
+	p2=(1)/((1+1))
 	flux_bounds_array1[2,2] = vmax₂*p2
 	#v3
-	p3=(1*0.165)/((1+1)*(1+0.165)-1)
+	p3=(1*0.165)/((1+1)*(1+0.165))
 	flux_bounds_array1[3,2] = vmax₃*p3
 	#v4
-	geometric=(2.81*0.0119)^.5
-	p4=(1*geometric)/((1+1)*(1+geometric)-1)
+	#geometric=(2.81*0.0119)^.5#makes this too low with the O2 restriction, just use Saccharomyces cerevisiae- more similar to humans than e coli?
+	 geo=2.81
+	p4=(1*geo)/((1+1)*(1+geo))
+	#p4=(1*geometric)/((1+1)*(1+geometric))
 	flux_bounds_array1[4,2] = vmax₄*p4
+	
+
 	 #v5 forward
-	p5=(1*1*1*73.1)/((1+1)*(1+1)*(1+1)*(1+73.1)-1)
+	p5=(1*1*1*73.1)/((1+1)*(1+1)*(1+1)*(1+73.1))
 	flux_bounds_array1[5,2] = vmax₅*p5
 	 #v6 reverse
-	 p6=(1*1*1*1)/((1+1)^4-1)
+	 p6=(1*1*1*1)/((1+1)^4)
 	flux_bounds_array1[6,2] = vmax₆*p6
 
+	# O2 uptake(restriction) -
+	flux_bounds_array[15,1] = 0.25
+	 #flux_bounds_array[15,1] = 0
+	 
 	# setup species bounds array -
 	species_bounds_array1 = zeros(ℳ,2)
 
@@ -333,6 +342,9 @@ end
 	
  end
 
+
+# ╔═╡ 4201dbe1-036b-43a7-b9cd-0630e8001014
+flux_bounds_array1
 
 # ╔═╡ a8de075f-e8dd-45fe-99cd-4c6253f8058a
 # check:
@@ -1939,6 +1951,7 @@ version = "0.9.1+5"
 # ╟─85e1ac31-90cf-48da-b4d7-b6c009328084
 # ╠═7ab4d2d1-36d1-4c15-ab8a-a469a2da3fc6
 # ╠═a8de075f-e8dd-45fe-99cd-4c6253f8058a
+# ╠═4201dbe1-036b-43a7-b9cd-0630e8001014
 # ╠═cb17c2f0-6365-4c64-8dff-1198206585e6
 # ╟─70239f9d-1ea8-4ad2-92a3-126cd99de4f0
 # ╟─cb7d76b8-85f9-4886-a4f3-3f9fb82e42dc
